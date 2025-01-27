@@ -1,0 +1,72 @@
+// _product-card.scss
+
+$product-card-width: 285px;
+$overlay-bg-color: rgba(51, 51, 51, 0.7);
+$overlay-text-color: white;
+$badge-size: 3rem;
+$badge-font-size: 1.2rem;
+$btn-overlay-bg: white;
+$btn-overlay-color: #B88E2F;
+
+.product-card {
+  position: relative;
+  width: $product-card-width;
+
+  &:hover {
+    .overlay {
+      visibility: visible;
+    }
+  }
+
+  .overlay {
+    background-color: $overlay-bg-color;
+    color: $overlay-text-color;
+    height: 420px;
+    width: $product-card-width;
+    position: absolute;
+    z-index: 2;
+    visibility: hidden;
+    text-align: center;
+    align-content: center;
+  }
+
+  .btn-overlay {
+    color: $btn-overlay-color;
+    background-color: $btn-overlay-bg;
+    border: none;
+    font-weight: 700;
+    padding: 1rem 3rem;
+  }
+
+  .card-bg {
+    background-color: #F4F5F7;
+    padding: 1rem;
+  }
+
+  .badge-discount, .badge-new {
+    position: absolute;
+    z-index: 1;
+    top: 1rem;
+    right: 1rem;
+    color: white;
+    height: $badge-size;
+    width: $badge-size;
+    border-radius: 50%;
+    text-align: center;
+    line-height: $badge-size;
+    font-size: $badge-font-size;
+  }
+
+  .badge-discount {
+    background-color: #E97171;
+  }
+
+  .badge-new {
+    background-color: #2EC1AC;
+  }
+
+  .old-price {
+    color: #B0B0B0;
+    text-decoration: line-through;
+  }
+}
