@@ -1,3 +1,4 @@
+import Product from "@/components/product/Product";
 import { SuspenseContainer } from "@/config";
 import Otp from "@/pages/auth/otp/Otp";
 import Profile from "@/pages/auth/profile/Profile";
@@ -34,6 +35,14 @@ const Routers = () => {
               element: (
                 <SuspenseContainer>
                   <Shop />
+                </SuspenseContainer>
+              ),
+            },
+            {
+              path: "/product",
+              element: (
+                <SuspenseContainer>
+                  <Product />
                 </SuspenseContainer>
               ),
             },
