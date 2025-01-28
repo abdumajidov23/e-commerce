@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import '../product-card/ProductCard.scss';
 
 interface ProductCardProps {
@@ -20,6 +21,7 @@ function ProductCard({
   discountPrice,
 }: ProductCardProps) {
   const isDiscount = discount;
+  const navigate = useNavigate()
 
   return (
     <div className="relative w-[285px] border rounded-md overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -33,7 +35,7 @@ function ProductCard({
               <img src="/images/share.svg" alt="Share" className="w-6 h-6" />
               <p className="mt-1 text-sm">Share</p>
             </div>
-            <div className="flex flex-col items-center cursor-pointer hover:scale-105 transform transition-all duration-300 focus:scale-95 focus:rounded-full">
+            <div className="flex flex-col items-center cursor-pointer hover:scale-105 transform transition-all duration-300 focus:scale-95 focus:rounded-full" onClick={() => navigate("/product")}>
               <img src="/images/compare.svg" alt="Compare" className="w-6 h-6" />
               <p className="mt-1 text-sm">Compare</p>
             </div>
