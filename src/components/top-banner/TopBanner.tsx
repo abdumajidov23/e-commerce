@@ -2,38 +2,53 @@ import { Link } from "react-router-dom";
 
 interface TopBannerProps {
   currentPage: string;
+  backgroundImage?: string; // Optional custom background image
 }
 
-function TopBanner({ currentPage }: TopBannerProps) {
+function LoftStyleTopBanner({
+  currentPage,
+  backgroundImage = "/images/top_banner.png", // Default background image
+}: TopBannerProps) {
   return (
-      <div className="relative h-72">
-        <div
-          className="absolute top-0 left-0 right-0 bottom-0 bg-cover bg-center"
-          style={{
-            backgroundImage: "url('/images/top_banner.png')",
-            filter: "blur(3px)",
-            zIndex: 1, 
-          }}
-        ></div>
+    <div className="relative h-80 md:h-96 lg:h-[500px] w-full overflow-hidden bg-gray-800">
+      {/* Background Image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: `url('${backgroundImage}')`,
+        }}
+      ></div>
 
-        <div className="relative text-center flex flex-col justify-center items-center h-full">
-          <h1 className="text-black font-bold text-5xl mb-3 z-10">{currentPage}</h1>
-          <nav aria-label="breadcrumb" className="z-10">
-            <ol className="breadcrumb text-black flex justify-center space-x-3">
-              <li className="breadcrumb-item">
-                <Link to={"/"}>
-                  <p className="hover:text-bg-primary">Home</p>
-                </Link>
-              </li>
-              <li className="breadcrumb-item text-gray-600">{" > "}</li>
-              <li className="breadcrumb-item text-gray-600" aria-current="page">
-                {currentPage}
-              </li>
-            </ol>
-          </nav>
-        </div>
+      {/* Gradient Overlay for Better Text Readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/90"></div>
+
+      {/* Content */}
+      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
+        {/* Page Title */}
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wide mb-4 uppercase">
+          {currentPage}
+        </h1>
+
+        {/* Breadcrumb Navigation */}
+        <nav aria-label="breadcrumb">
+          <ol className="flex items-center space-x-2 text-sm md:text-base">
+            <li>
+              <Link
+                to="/"
+                className="text-gray-300 hover:text-bg-primary transition duration-300"
+              >
+                Home
+              </Link>
+            </li>
+            <li className="text-gray-400">/</li>
+            <li aria-current="page" className="text-bg-primary">
+              {currentPage}
+            </li>
+          </ol>
+        </nav>
       </div>
+    </div>
   );
 }
 
-export default TopBanner;
+export default LoftStyleTopBanner;

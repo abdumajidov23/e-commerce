@@ -7,21 +7,26 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 1rem;
-    height: 100%;  // Ensures that it takes the full height
+    height: 100%; // Ensures that it takes the full height
+    flex-wrap: wrap; // Allows items to wrap on smaller screens
 
     .service-item {
       display: flex;
-      align-items: center;   // Align items horizontally
+      align-items: center; // Align items horizontally
       justify-content: center; // Centers content horizontally
+      flex: 1; // Allow items to grow and shrink equally
+      min-width: 150px; // Minimum width for each service item
 
       img {
-        margin-right: 0.5rem;  // Space between image and text
+        margin-right: 0.5rem; // Space between image and text
+        width: 40px; // Set a fixed size for icons
+        height: auto; // Maintain aspect ratio
       }
 
       div {
         display: flex;
         flex-direction: column;
-        align-items: flex-start;  // Align text and button vertically
+        align-items: flex-start; // Align text and button vertically
       }
 
       button {
@@ -31,11 +36,37 @@
         cursor: pointer;
         text-align: left;
         padding: 0;
-        color: #333;  // Adjust text color if needed
+        color: #333; // Adjust text color if needed
       }
 
       p {
         color: #6b7280;
+      }
+    }
+  }
+
+  // Media Queries for Responsiveness
+  @media (max-width: 768px) {
+    height: auto; // Allow height to adjust based on content
+
+    .container {
+      flex-direction: column; // Stack items vertically on smaller screens
+      align-items: center; // Center items horizontally
+
+      .service-item {
+        margin-bottom: 1rem; // Space between stacked items
+        justify-content: flex-start; // Align items to the start
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      padding: 0 0.5rem; // Reduce padding on very small screens
+
+      .service-item {
+        min-width: auto; // Remove minimum width constraint
+        text-align: center; // Center text for smaller screens
       }
     }
   }
