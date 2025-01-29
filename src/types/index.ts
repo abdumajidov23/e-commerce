@@ -3,24 +3,36 @@ export interface IGetResponseProducts {
   message: string;
   statusCode: number;
 }
+
 export interface IGetProducts {
   limit: number;
   page: number;
   products: IProduct[];
   total: number;
 }
+
 export interface IProduct {
   id: number;
-  name: string;
-  stock: number;
-  images: string[];
-  description: string;
-  averageRating: number;
+  title: string;
+  desc: number;
+  sales_package: string;
   price: number;
-  sku: string;
+  width: string;
+  height: string;
+  weight: string;
+  depth: string;
+  categoryId: number;
+  quantity: number;
+  created_country: string;
+  garanty: number;
   colors: string[];
-  tags: string[];
+  discountId: null | number;
+  filling_material: string;
+  upholstery_material: string;
+  secondary_material: string;
+  images: string[];
 }
+
 export interface IProductQuery {
   filter?: string;
   order?: "asc" | "desc";
@@ -36,4 +48,18 @@ export interface ICustomer {
   password: string,
   confirm_password: string,
   phone_number: string,
+}
+
+export interface ICustomerDataResponse {
+  statusCode: number;
+  message: string;
+  data: {
+    customer: ICustomer;
+  };
+}
+export interface OtpResponse {
+  id?: number;
+  access_token: string;
+  statusCode: number;
+  message: string;
 }
