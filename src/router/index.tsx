@@ -8,6 +8,7 @@ import Wishlist from "@/pages/wishlist/Wishlist";
 import { lazy } from "react";
 import { useRoutes } from "react-router-dom";
 import MainDetail from "../detail/MainDetail";
+import Cart from "@/components/cart/Cart";
 const Home = lazy(() => import("@/pages/home/Home"));
 const Shop = lazy(() => import("@/pages/shop/Shop"));
 const Layout = lazy(() => import("@/pages/layout/Layout"));
@@ -71,6 +72,14 @@ const Routers = () => {
               element: (
                 <SuspenseContainer>
                   <Checkout />
+                </SuspenseContainer>
+              ),
+            },
+            {
+              path: "/cart",
+              element: (
+                <SuspenseContainer>
+                  <Cart />
                 </SuspenseContainer>
               ),
             },
