@@ -61,10 +61,7 @@ const Contact = () => {
                 <form className="space-y-4 flex flex-col gap-4">
                   <div>
                     <label className="block font-medium text-xl">Your name</label>
-                    <input 
-                      type="text" 
-                      placeholder="Last Name"
-                      className="w-full px-2 py-4 border rounded-md"
+                    <input  type="text" placeholder="Last Name" className="w-full px-2 py-4 border rounded-md"
                     />
                   </div>
 

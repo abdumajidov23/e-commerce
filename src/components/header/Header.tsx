@@ -145,12 +145,12 @@ const Header = () => {
                     <span className="text-yellow-600">Rs. 200,000</span>
                   </div>
                   <div className="mt-4 flex space-x-2">
-                    <button className="flex-1 border py-2 rounded-md hover:bg-gray-100 px-2 border-green-950">Cart</button>
-                    <button className="flex-1 border py-2 rounded-md hover:bg-gray-100 px-2 border-green-950">Checkout</button>
-                    <button onClick={handleComparisonClick} 
+                    <NavLink to={"/cart"} onClick={handleComparisonClick} className="flex-1 border py-2 rounded-md hover:bg-gray-100 px-2 border-green-950">Cart</NavLink>
+                    <NavLink to={"/checkout"} onClick={handleComparisonClick} className="flex-1 border py-2 rounded-md hover:bg-gray-100 px-2 border-green-950">Checkout</NavLink>
+                    <NavLink to={"/product"} onClick={handleComparisonClick} 
                       className="flex-1 border py-2 rounded-md hover:bg-gray-100 px-2 border-green-950">
                       Comparison
-                    </button>
+                    </NavLink>
                   </div>
                 </div>
               </div>
