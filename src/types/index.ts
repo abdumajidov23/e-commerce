@@ -11,8 +11,18 @@ export interface IGetProducts {
   total: number;
 }
 
+export interface IReview {
+  id: number;
+  comment: string;
+}
+
+export interface IDiscount {
+  percent?: number;
+}
+
 export interface IProduct {
   id: number;
+  name: string;
   title: string;
   desc: string;
   sales_package: string;
@@ -24,14 +34,18 @@ export interface IProduct {
   categoryId: number;
   quantity: number;
   created_country: string;
-  garanty: number;
+  garanty: number; // in years
+  averageRating: number;
   colors: string[];
-  discountId: null | number;
+  is_liked?: boolean; // optional
+  discountId?: IDiscount; // optional discount information
+  reviews?: IReview[]; // moved out of discountId
   filling_material: string;
   upholstery_material: string;
   secondary_material: string;
   images: string[];
 }
+
 
 export interface IProductQuery {
   filter?: string;
@@ -39,6 +53,7 @@ export interface IProductQuery {
   page?: number;
   limit?: number;
   priceOrder?: "asc" | "desc";
+  category?: string
 }
 
 export interface ICustomer {
