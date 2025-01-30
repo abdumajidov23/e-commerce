@@ -74,7 +74,7 @@ const HeaderSearch: FC<{ searchOpen: boolean; setSearchOpen: any }> = ({
         <div className=" max-w-2xl w-full flex flex-col gap-1">
           {data?.data?.products?.map((product: IProduct) => (
             <Link key={product.id} onClick={handlClose} className="flex items-center gap-3 border-b p-1 hover:bg-slate-100 last:border-b-0" to={`/product/${product.id}`}>
-              <img src={import.meta.env.VITE_BASE_IMAGE_URL + product.images[0]} alt={product.name} className="w-12 h-12 object-contain" />
+              <img src={import.meta.env.BASE_IMAGE_URL + product.images[0]} alt={product.name} className="w-12 h-12 object-contain" />
               <span>{product.name}</span>
             </Link>
           ))}

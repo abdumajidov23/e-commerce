@@ -1,192 +1,152 @@
-import React, { useState, useMemo, useCallback } from 'react';
-import TopBanner from '../../components/top-banner/TopBanner';
-import ProductCard from '../../components/product-card/ProductCard';
-import CustomerService from '../../components/customer-service/CustomerService';
+import React, { useEffect, useState } from "react";
+import { useGetProductsQuery } from "../../redux/api/product-api";
+import Products from "../../components/products/Products";
+import { Pagination } from "@mui/material";
+import { GiSettingsKnobs } from "react-icons/gi";
+import { BsViewList } from "react-icons/bs";
+import Hero from "./Hero";
+import { PiCirclesFourFill } from "react-icons/pi";
+import './Shop.scss';
+import CustomerService from "../../components/customer-service/CustomerService";
 
-// Types
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: string;
-  discountPrice?: string;
-  discount?: string;
-  image: string;
-}
+const Shop = () => {
+  const [page, setPage] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(12);
+  const [sort, setSort] = useState<string>("default");
+  const [grid, setGrid] = useState<boolean>(JSON.parse(localStorage.getItem("grid") || "true"));
 
-type ViewMode = 'grid' | 'list';
-type SortOption = 'default' | 'price-asc' | 'price-desc' | 'name-asc' | 'name-desc';
+  // Fetching products
+  const { data, isLoading } = useGetProductsQuery({
+    limit,
+    page,
+  });
 
-// Products list (28 items)
-const products: Product[] = Array.from({ length: 28 }, (_, index) => ({
-  id: index + 1,
-  name: `Product ${index + 1}`,
-  description: 'Stylish and comfortable',
-  price: `$${(100 + index * 10).toFixed(2)}`,
-  discountPrice: index % 2 === 0 ? `$${(80 + index * 10).toFixed(2)}` : undefined,
-  discount: index % 2 === 0 ? '-20%' : undefined,
-  image: `/images/product_${index + 1}.png`,
-}));
+  const totalPages = data ? Math.ceil(data.data.total / limit) : 0;
 
-function Shop() {
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
-  const [itemsPerPage, setItemsPerPage] = useState<number>(16);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [sortBy, setSortBy] = useState<SortOption>('default');
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]);
 
-  // Memoize sorted products
-  const sortedProducts = useMemo(() => {
-    const sorted = [...products];
-    
-    switch (sortBy) {
-      case 'price-asc':
-        return sorted.sort((a, b) => parseFloat(a.price.slice(1)) - parseFloat(b.price.slice(1)));
-      case 'price-desc':
-        return sorted.sort((a, b) => parseFloat(b.price.slice(1)) - parseFloat(a.price.slice(1)));
-      case 'name-asc':
-        return sorted.sort((a, b) => a.name.localeCompare(b.name));
-      case 'name-desc':
-        return sorted.sort((a, b) => b.name.localeCompare(a.name));
-      default:
-        return sorted;
-    }
-  }, [sortBy]);
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    event.preventDefault();
+    setPage(value);
+  };
 
-  // Memoize pagination values
-  const { startIndex, endIndex, totalPages } = useMemo(() => ({
-    startIndex: (currentPage - 1) * itemsPerPage + 1,
-    endIndex: Math.min(currentPage * itemsPerPage, sortedProducts.length),
-    totalPages: Math.ceil(sortedProducts.length / itemsPerPage)
-  }), [currentPage, itemsPerPage, sortedProducts.length]);
+  const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLimit(Number(e.target.value));
+    setPage(1);
+  };
 
-  // Handlers
-  const handleSortChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortBy(e.target.value as SortOption);
-    setCurrentPage(1); // Reset to first page when sorting changes
-  }, []);
-
-  const handleItemsPerPageChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newItemsPerPage = Number(e.target.value);
-    setItemsPerPage(newItemsPerPage);
-    setCurrentPage(1); // Reset to first page when items per page changes
-  }, []);
-
-  const handleFilterClick = useCallback(() => {
-    console.log('Filter clicked');
-    // Implement filter logic here
-  }, []);
-
-  const changePage = useCallback((page: number) => {
-    setCurrentPage(page);
-  }, []);
-
-  const renderPageButtons = useMemo(() => (
-    [...Array(totalPages)].map((_, index) => (
-      <button
-        key={index}
-        className={`py-2 px-4 rounded-md ${
-          currentPage === index + 1
-            ? 'bg-[#B88E2F] text-white'
-            : 'bg-[#F9F1E7] text-gray-700 hover:bg-[#E9E1D7]'
-        }`}
-        onClick={() => changePage(index + 1)}
-        aria-label={`Page ${index + 1}`}
-      >
-        {index + 1}
-      </button>
-    ))
-  ), [currentPage, totalPages, changePage]);
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSort(e.target.value);
+    setPage(1);
+  };
 
   return (
-    <div className="min-h-screen">
-      <TopBanner currentPage="Shop" />
-
-      <div className="bg-[#F9F1E7] mb-5">
-        <div className="container mx-auto flex flex-col md:flex-row justify-between py-3 px-4">
-          {/* Filters and Views */}
-          <div className="flex items-center mb-3 md:mb-0">
-            <button 
-              className="mr-3 hover:opacity-80 transition-opacity" 
-              onClick={handleFilterClick}
-              aria-label="Filter products"
-            >
-              <img src="/images/filter.svg" alt="Filter" className="w-6 h-6" />
-            </button>
-            <button
-              className={`mr-3 transition-opacity ${viewMode === 'grid' ? 'opacity-100' : 'opacity-50 hover:opacity-70'}`}
-              onClick={() => setViewMode('grid')}
-              aria-label="Grid view"
-            >
-              <img src="/images/show_grid.svg" alt="Grid View" className="w-6 h-6" />
-            </button>
-            <button
-              className={`mr-5 transition-opacity ${viewMode === 'list' ? 'opacity-100' : 'opacity-50 hover:opacity-70'}`}
-              onClick={() => setViewMode('list')}
-              aria-label="List view"
-            >
-              <img src="/images/show_list.svg" alt="List View" className="w-6 h-6" />
-            </button>
-            <p className="text-sm text-gray-500">
-              Showing {startIndex}-{endIndex} of {sortedProducts.length} results
-            </p>
+    <>
+      <Hero />
+      <div className="bg-[#F9F1E7] dark:bg-primary duration-300 h-[100px] grid place-items-center font-poppins mb-16">
+        <div className="container flex flex-wrap justify-between items-center gap-4">
+          <div className="flex items-center gap-6 sm:gap-4">
+            <div className="flex items-center gap-3 cursor-pointer hover:text-bg-primary duration-300">
+              <GiSettingsKnobs className="w-6 h-6 md:w-5 md:h-5" />
+              <p className="text-xl md:text-base font-medium">Filter</p>
+            </div>
+            <div onClick={() => setGrid(true)} className="flex justify-center items-center cursor-pointer hover:text-bg-primary duration-300">
+              <PiCirclesFourFill className="w-7 h-7 md:w-6 md:h-6" />
+            </div>
+            <div onClick={() => setGrid(false)} className="flex justify-center items-center cursor-pointer hover:text-bg-primary duration-300">
+              <BsViewList className="w-7 h-7 md:w-6 md:h-6" />
+            </div>
+            <div className="hidden md:inline-block">|</div>
+            <div className="text-sm md:text-xs">
+              Showing {page * limit - (limit - 1)}–{page * limit} of {data?.data?.total} results
+            </div>
           </div>
-
-          {/* Sorting */}
-          <div className="flex items-center flex-wrap gap-2">
-            <label htmlFor="itemsPerPage" className="text-sm">Show</label>
-            <select
-              id="itemsPerPage"
-              className="bg-white text-gray-700 mr-3 py-2 px-3 rounded hover:bg-gray-50 focus:ring-2 focus:ring-[#B88E2F]"
-              value={itemsPerPage}
-              onChange={handleItemsPerPageChange}
-            >
-              {[16, 32, 48].map((count) => (
-                <option key={count} value={count}>{count}</option>
-              ))}
-            </select>
-            
-            <label htmlFor="sortBy" className="text-sm">Sort By</label>
-            <select
-              id="sortBy"
-              className="bg-white text-gray-700 py-2 px-3 rounded hover:bg-gray-50 focus:ring-2 focus:ring-[#B88E2F]"
-              value={sortBy}
-              onChange={handleSortChange}
-            >
-              <option value="default">Default</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="name-asc">Name: A to Z</option>
-              <option value="name-desc">Name: Z to A</option>
-            </select>
+          <div className="flex flex-wrap gap-4 md:gap-2 items-center">
+            <div className="flex items-center gap-2 cursor-pointer hover:text-bg-primary duration-300">
+              <p className="text-base md:text-sm">Show</p>
+              <select
+                value={limit}
+                onChange={handleLimitChange}
+                className="w-14 h-14 md:w-12 md:h-12 bg-white dark:bg-slate-100 outline-none text-lg md:text-sm text-center rounded-sm text-bg-primary"
+              >
+                {[4, 8, 16, 32].map(option => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </select>
+            </div>
+            <div className="flex items-center gap-2 cursor-pointer hover:text-bg-primary duration-300">
+              <p className="text-base md:text-sm">Sort by</p>
+              <select
+                value={sort}
+                onChange={handleSortChange}
+                className="w-48 h-14 md:w-32 md:h-12 bg-white dark:bg-slate-100 outline-none text-lg md:text-sm indent-3 rounded-sm text-bg-primary"
+              >
+                <option value="default">Default</option>
+                <option value="name">Name</option>
+                <option value="price">Price</option>
+                <option value="discount">Discount</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Products */}
-      <div className="container mx-auto px-4">
-        <div
-          className={`${
-            viewMode === 'grid' 
-              ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'
-              : 'flex flex-col gap-5'
-          }`}
-        >
-          {sortedProducts
-            .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-            .map((product) => (
-              <ProductCard key={product.id} {...product} />
-            ))}
+      <section className="container pb-12">
+        {isLoading && (
+          <div className="flex justify-center items-center min-h-[10vh]">
+            <div className="loader"></div>
+          </div>
+        )}
+        {data && data.data.products.length > 0 ? (
+          <Products grid={grid} data={data.data.products} title="Shop" />
+        ) : (
+          !isLoading && (
+            <p>No products available.</p>
+          )
+        )}
+        <div className="flex justify-center">
+          <Pagination
+            count={totalPages}
+            shape="rounded"
+            page={page}
+            onChange={handlePageChange}
+            sx={{
+              "& .MuiPagination-ul": {
+                display: "flex",
+                gap: "30px",
+                "& .Mui-selected": {
+                  backgroundColor: "#B88E2F",
+                  color: "#fff",
+                  fontWeight: "500",
+                },
+              },
+              "& .MuiPaginationItem-root": {
+                backgroundColor: "#F9F1E7",
+                color: "#000",
+                borderRadius: "8px",
+                fontSize: "20px",
+                height: "60px",
+                width: "60px",
+              },
+              "@media (max-width: 600px)": {
+                "& .MuiPaginationItem-root": {
+                  fontSize: "15px",
+                  height: "45px",
+                  width: "45px",
+                },
+                "& .MuiPagination-ul": {
+                  gap: "10px",
+                },
+              },
+            }}
+          />
         </div>
-
-        {/* Pagination */}
-        <div className="mb-5 flex justify-center gap-3 mt-8 flex-wrap">
-          {renderPageButtons}
-        </div>
-      </div>
-
+      </section>
       <CustomerService />
-    </div>
+    </>
   );
-}
+};
 
-export default Shop;
+export default React.memo(Shop);
