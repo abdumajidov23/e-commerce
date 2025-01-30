@@ -1,3 +1,5 @@
+import Checkout from "@/components/checkout/Checkout";
+import Contact from "@/components/contact/Contact";
 import Product from "@/components/product/Product";
 import { SuspenseContainer } from "@/config";
 import Otp from "@/pages/auth/otp/Otp";
@@ -52,6 +54,22 @@ const Routers = () => {
               element: (
                 <SuspenseContainer>
                   <Wishlist />
+                </SuspenseContainer>
+              ),
+            },
+            {
+              path: "/contact",
+              element: (
+                <SuspenseContainer>
+                  <Contact />
+                </SuspenseContainer>
+              ),
+            },
+            {
+              path: "/checkout",
+              element: (
+                <SuspenseContainer>
+                  <Checkout />
                 </SuspenseContainer>
               ),
             },
