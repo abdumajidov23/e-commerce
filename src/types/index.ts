@@ -14,7 +14,7 @@ export interface IGetProducts {
 export interface IProduct {
   id: number;
   title: string;
-  desc: number;
+  desc: string;
   sales_package: string;
   price: number;
   width: string;
