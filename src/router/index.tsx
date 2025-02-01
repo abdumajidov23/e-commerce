@@ -9,6 +9,7 @@ import { lazy } from "react";
 import { useRoutes } from "react-router-dom";
 import MainDetail from "../detail/MainDetail";
 import Cart from "@/components/cart/Cart";
+import About from "@/components/about/About";
 const Home = lazy(() => import("@/pages/home/Home"));
 const Shop = lazy(() => import("@/pages/shop/Shop"));
 const Layout = lazy(() => import("@/pages/layout/Layout"));
@@ -80,6 +81,14 @@ const Routers = () => {
               element: (
                 <SuspenseContainer>
                   <Cart />
+                </SuspenseContainer>
+              ),
+            },
+            {
+              path: "/about",
+              element: (
+                <SuspenseContainer>
+                  <About />
                 </SuspenseContainer>
               ),
             },
