@@ -26,7 +26,7 @@ const Products: FC<IProductProps> = ({ data, title, grid }) => {
       >
         <img
           className="w-full h-full bg-no-repeat bg-center bg-cover group-hover:scale-[1.02] duration-300 md:scale-100 cursor-pointer"
-          src={`${import.meta.env.VITE_BASE_IMAGE_URL}${product.images[0]}`}
+          src={`${import.meta.env.IMAGE_BASE_URL}${product.images[0]}`}
           alt={product.name}
         />
       </div>
@@ -38,7 +38,7 @@ const Products: FC<IProductProps> = ({ data, title, grid }) => {
         !!product.discountId?.percent &&
         <Discount percent={Number(product.discountId?.percent)} />
       }
-      <div className="py-4 px-4  dark:bg-zinc-800 transition-colors duration-300">
+      <div className="py-4 px-4  dark:bg-white transition-colors duration-300">
         <h2
           title={product.name}
           className="line-clamp-1 text-[24px] font-semibold leading-8 max-[620px]:text-lg"
