@@ -5,7 +5,6 @@ import { FaFacebook } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { IProduct, IReview } from "@/types";
-import { NavLink } from "react-router-dom";
 
 const ProductDetail = ({
   product,

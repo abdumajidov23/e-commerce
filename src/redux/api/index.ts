@@ -4,7 +4,7 @@ import { clearToken } from "../features/token-slice";
 const baseQuery = async (args: any, api: any, extraOptions: any) => {
   const { dispatch } = api;
   const rawBaseQuery = fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BASE_URL,
+    baseUrl: import.meta.env.BASE_URL,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("access_token") as string;
       if (token) {
