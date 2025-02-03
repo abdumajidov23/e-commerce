@@ -5,7 +5,7 @@ const extendedApi = mainApi.injectEndpoints({
   endpoints: (build) => ({
     createCustomer: build.mutation<any, ICustomer>({
       query: (body) => ({
-        url: "customer/auth/signup",
+        url: "customer/auth/signup-user",
         method: "POST",
         body,
       }),
