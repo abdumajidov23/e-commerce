@@ -27,6 +27,7 @@ const Products: FC<IProductProps> = ({ data, title, grid }) => {
         <img
           className="w-full h-full bg-no-repeat bg-center bg-cover group-hover:scale-[1.02] duration-300 md:scale-100 cursor-pointer"
           src={`${import.meta.env.IMAGE_BASE_URL}${product.images[0]}`}
+
           alt={product.name}
         />
       </div>

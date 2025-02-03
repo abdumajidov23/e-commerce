@@ -1,3 +1,5 @@
+import Checkout from "@/components/checkout/Checkout";
+import Contact from "@/components/contact/Contact";
 import Product from "@/components/product/Product";
 import { SuspenseContainer } from "@/config";
 import Otp from "@/pages/auth/otp/Otp";
@@ -6,6 +8,8 @@ import Wishlist from "@/pages/wishlist/Wishlist";
 import { lazy } from "react";
 import { useRoutes } from "react-router-dom";
 import MainDetail from "../detail/MainDetail";
+import Cart from "@/components/cart/Cart";
+import About from "@/components/about/About";
 const Home = lazy(() => import("@/pages/home/Home"));
 const Shop = lazy(() => import("@/pages/shop/Shop"));
 const Layout = lazy(() => import("@/pages/layout/Layout"));
@@ -53,6 +57,38 @@ const Routers = () => {
               element: (
                 <SuspenseContainer>
                   <Wishlist />
+                </SuspenseContainer>
+              ),
+            },
+            {
+              path: "/contact",
+              element: (
+                <SuspenseContainer>
+                  <Contact />
+                </SuspenseContainer>
+              ),
+            },
+            {
+              path: "/checkout",
+              element: (
+                <SuspenseContainer>
+                  <Checkout />
+                </SuspenseContainer>
+              ),
+            },
+            {
+              path: "/cart",
+              element: (
+                <SuspenseContainer>
+                  <Cart />
+                </SuspenseContainer>
+              ),
+            },
+            {
+              path: "/about",
+              element: (
+                <SuspenseContainer>
+                  <About />
                 </SuspenseContainer>
               ),
             },
