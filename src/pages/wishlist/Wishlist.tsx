@@ -4,7 +4,6 @@ import Products from "../../components/products/Products";
 import { useEffect } from "react";
 import { useCheckTokenQuery } from "@/redux/api/customer-api";
 import { useGetWishlistQuery } from "@/redux/api/wishlist-api";
-import { IGetResponseProducts } from "@/types"; // Assuming this is the type of products data
 
 const Wishlist = () => {
   // Get wishlist from Redux store

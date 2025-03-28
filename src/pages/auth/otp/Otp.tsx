@@ -114,10 +114,12 @@ function OTP({
 
   const handleClick = (
     event: React.MouseEvent<HTMLInputElement, MouseEvent>,
-    currentIndex: number,
+    currentIndex: number
   ) => {
+    void event; // TypeScript xatolik bermaydi
     selectInput(currentIndex);
   };
+  
 
   const handlePaste = (
     event: React.ClipboardEvent<HTMLInputElement>,
