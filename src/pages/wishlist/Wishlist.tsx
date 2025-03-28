@@ -35,10 +35,10 @@ const Wishlist = () => {
 
   return (
     <>
-      <Products
-        data={productsData as IGetResponseProducts} // Cast data to the expected type
-        title={title} 
-      />
+     <Products
+    data={productsData} // Endi to‘g‘ri massiv uzatiladi
+    title={title} 
+  />
     </>
   );
 };

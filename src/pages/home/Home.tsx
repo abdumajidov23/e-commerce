@@ -8,16 +8,16 @@ import Insparation from "./Insparation";
 
 const Home = () => {
   const { data } = useGetProductsQuery({});
+
   return (
     <div>
       <Hero />
       <Browse />
-      {data && <Products data={data} />}
-      <Insparation/>
-      <SwiperInfinite/>
+      {data && Array.isArray(data) && <Products data={data} />} 
+      <Insparation />
+      <SwiperInfinite />
     </div>
   );
 };
 
 export default React.memo(Home);
-
